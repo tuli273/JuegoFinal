@@ -6,16 +6,588 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>1000</width>
+    <height>700</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <widget class="QWidget" name="centralwidget"/>
-  <widget class="QMenuBar" name="menubar"/>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QGraphicsView" name="graphicsView">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>10</y>
+      <width>1000</width>
+      <height>700</height>
+     </rect>
+    </property>
+    <property name="verticalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOff</enum>
+    </property>
+    <property name="horizontalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOff</enum>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="boton_nuevapartida">
+    <property name="geometry">
+     <rect>
+      <x>405</x>
+      <y>370</y>
+      <width>165</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string/>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:0, stop:0 rgba(0, 0, 0, 0), stop:1 rgba(255, 255, 255, 255));
+border-image: url(:/recursos/Imagenes/VACIO.png);
+background-image: url(:/recursos/Imagenes/new_game.png);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="boton_cargarpartida">
+    <property name="geometry">
+     <rect>
+      <x>405</x>
+      <y>440</y>
+      <width>170</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:0, stop:0 rgba(0, 0, 0, 0), stop:1 rgba(255, 255, 255, 255));
+border-image: url(:/recursos/Imagenes/VACIO.png);
+background-image: url(:/recursos/Imagenes/load_game.png);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="boton_partida2">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>360</y>
+      <width>81</width>
+      <height>60</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:0, stop:0 rgba(0, 0, 0, 0), stop:1 rgba(255, 255, 255, 255));
+background-image: url(:/recursos/Imagenes/2.png);
+border-image: url(:/recursos/Imagenes/VACIO.png);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="boton_partida1">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>290</y>
+      <width>81</width>
+      <height>60</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:0, stop:0 rgba(0, 0, 0, 0), stop:1 rgba(255, 255, 255, 255));
+background-image: url(:/recursos/Imagenes/1.png);
+border-image: url(:/recursos/Imagenes/VACIO.png);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="boton_partida3">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>430</y>
+      <width>81</width>
+      <height>60</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:0, stop:0 rgba(0, 0, 0, 0), stop:1 rgba(255, 255, 255, 255));
+background-image: url(:/recursos/Imagenes/3.png);
+border-image: url(:/recursos/Imagenes/VACIO.png);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="boton_regresar">
+    <property name="geometry">
+     <rect>
+      <x>780</x>
+      <y>540</y>
+      <width>131</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:0, stop:0 rgba(0, 0, 0, 0), stop:1 rgba(255, 255, 255, 255));
+border-image: url(:/recursos/Imagenes/VACIO.png);
+color: rgb(255, 255, 255);
+font: 75 16pt &quot;Trajan Pro 3&quot;;</string>
+    </property>
+    <property name="text">
+     <string>BACK</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pausar">
+    <property name="geometry">
+     <rect>
+      <x>910</x>
+      <y>20</y>
+      <width>50</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-image: url(:/recursos/Imagenes/pausa.png);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit1">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>290</y>
+      <width>195</width>
+      <height>60</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:0, stop:0 rgba(0, 0, 0, 0), stop:1 rgba(255, 255, 255, 255));
+color: rgb(255, 255, 255);
+font: 75 10pt &quot;Trajan Pro 3&quot;;
+border-image: url(:/recursos/Imagenes/VACIO.png);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit2">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>360</y>
+      <width>195</width>
+      <height>60</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:0, stop:0 rgba(0, 0, 0, 0), stop:1 rgba(255, 255, 255, 255));
+font: 75 10pt &quot;Trajan Pro 3&quot;;
+color: rgb(255, 255, 255);
+border-image: url(:/recursos/Imagenes/VACIO.png);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit3">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>430</y>
+      <width>195</width>
+      <height>60</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:0, stop:0 rgba(0, 0, 0, 0), stop:1 rgba(255, 255, 255, 255));
+font: 75 10pt &quot;Trajan Pro 3&quot;;
+color: rgb(255, 255, 255);
+border-image: url(:/recursos/Imagenes/VACIO.png);</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="boton_guardarpartida1">
+    <property name="geometry">
+     <rect>
+      <x>360</x>
+      <y>50</y>
+      <width>80</width>
+      <height>60</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:0, stop:0 rgba(0, 0, 0, 0), stop:1 rgba(255, 255, 255, 255));
+background-image: url(:/recursos/Imagenes/1.png);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="boton_guardarpartida2">
+    <property name="geometry">
+     <rect>
+      <x>460</x>
+      <y>50</y>
+      <width>80</width>
+      <height>60</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-image: url(:/recursos/Imagenes/2.jpg);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="boton_guardarpartida3">
+    <property name="geometry">
+     <rect>
+      <x>560</x>
+      <y>50</y>
+      <width>80</width>
+      <height>60</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-image: url(:/recursos/Imagenes/3.jpg);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="guardar">
+    <property name="geometry">
+     <rect>
+      <x>840</x>
+      <y>24</y>
+      <width>50</width>
+      <height>50</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-image: url(:/recursos/Imagenes/guardar.png);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Quemado">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>10</y>
+      <width>50</width>
+      <height>50</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Triturado">
+    <property name="geometry">
+     <rect>
+      <x>15</x>
+      <y>0</y>
+      <width>70</width>
+      <height>70</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Portal">
+    <property name="geometry">
+     <rect>
+      <x>-20</x>
+      <y>560</y>
+      <width>70</width>
+      <height>70</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_inicio_de_sesion">
+    <property name="geometry">
+     <rect>
+      <x>410</x>
+      <y>360</y>
+      <width>211</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 75 12pt &quot;Trajan Pro 3&quot;;
+border-image: url(:/recursos/Imagenes/VACIO.png);
+color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="text">
+     <string>LOGIN SESSION</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_usuario">
+    <property name="geometry">
+     <rect>
+      <x>410</x>
+      <y>400</y>
+      <width>80</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 75 12pt &quot;Trajan Pro 3&quot;;
+border-image: url(:/recursos/Imagenes/VACIO.png);
+color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="text">
+     <string>USER</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_clave">
+    <property name="geometry">
+     <rect>
+      <x>410</x>
+      <y>440</y>
+      <width>101</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 75 12pt &quot;Trajan Pro 3&quot;;
+border-image: url(:/recursos/Imagenes/VACIO.png);
+color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="text">
+     <string>PASSWORD</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit_usuario">
+    <property name="geometry">
+     <rect>
+      <x>510</x>
+      <y>400</y>
+      <width>80</width>
+      <height>25</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit_clave">
+    <property name="geometry">
+     <rect>
+      <x>510</x>
+      <y>440</y>
+      <width>80</width>
+      <height>25</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="boton_ingresar">
+    <property name="geometry">
+     <rect>
+      <x>510</x>
+      <y>490</y>
+      <width>90</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 75 12pt &quot;Trajan Pro 3&quot;;
+border-image: url(:/recursos/Imagenes/VACIO.png);
+color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="text">
+     <string>LOGIN</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="boton_cancelar">
+    <property name="geometry">
+     <rect>
+      <x>510</x>
+      <y>525</y>
+      <width>91</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 75 12pt &quot;Trajan Pro 3&quot;;
+border-image: url(:/recursos/Imagenes/VACIO.png);
+color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="text">
+     <string>CANCEL</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="boton_eliminar">
+    <property name="geometry">
+     <rect>
+      <x>510</x>
+      <y>560</y>
+      <width>90</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 75 12pt &quot;Trajan Pro 3&quot;;
+border-image: url(:/recursos/Imagenes/VACIO.png);
+color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="text">
+     <string>DELETE</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="boton_volveralmenu">
+    <property name="geometry">
+     <rect>
+      <x>880</x>
+      <y>600</y>
+      <width>91</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:0, stop:0 rgba(0, 0, 0, 0), stop:1 rgba(255, 255, 255, 255));
+font: 75 20pt &quot;Trajan Pro 3&quot;;
+border-image: url(:/recursos/Imagenes/VACIO.png);
+color: rgb(255, 255, 255);
+</string>
+    </property>
+    <property name="text">
+     <string>MENU</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="boton_multijugador">
+    <property name="geometry">
+     <rect>
+      <x>405</x>
+      <y>500</y>
+      <width>193</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:0, stop:0 rgba(0, 0, 0, 0), stop:1 rgba(255, 255, 255, 255));
+border-image: url(:/recursos/Imagenes/VACIO.png);
+background-image: url(:/recursos/Imagenes/multiplayer.png);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_ganador_multijugador">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>80</y>
+      <width>400</width>
+      <height>60</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 75 20pt &quot;Trajan Pro 3&quot;;
+border-image: url(:/recursos/Imagenes/VACIO.png);
+color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="boton_informacion">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>560</y>
+      <width>72</width>
+      <height>72</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-image: url(:/recursos/Imagenes/informacion.png);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <zorder>graphicsView</zorder>
+   <zorder>boton_nuevapartida</zorder>
+   <zorder>boton_cargarpartida</zorder>
+   <zorder>boton_partida1</zorder>
+   <zorder>boton_partida2</zorder>
+   <zorder>boton_regresar</zorder>
+   <zorder>pausar</zorder>
+   <zorder>lineEdit1</zorder>
+   <zorder>lineEdit2</zorder>
+   <zorder>guardar</zorder>
+   <zorder>boton_guardarpartida1</zorder>
+   <zorder>boton_guardarpartida3</zorder>
+   <zorder>boton_guardarpartida2</zorder>
+   <zorder>Quemado</zorder>
+   <zorder>Triturado</zorder>
+   <zorder>Portal</zorder>
+   <zorder>label_inicio_de_sesion</zorder>
+   <zorder>label_usuario</zorder>
+   <zorder>label_clave</zorder>
+   <zorder>lineEdit_usuario</zorder>
+   <zorder>lineEdit_clave</zorder>
+   <zorder>boton_ingresar</zorder>
+   <zorder>boton_cancelar</zorder>
+   <zorder>boton_eliminar</zorder>
+   <zorder>boton_volveralmenu</zorder>
+   <zorder>boton_multijugador</zorder>
+   <zorder>label_ganador_multijugador</zorder>
+   <zorder>lineEdit3</zorder>
+   <zorder>boton_partida3</zorder>
+   <zorder>boton_informacion</zorder>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1000</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuMenu">
+    <property name="title">
+     <string>Menu</string>
+    </property>
+    <addaction name="actionGuardar_partida"/>
+    <addaction name="actionCargar_partida"/>
+    <addaction name="actionVolver_al_inicio"/>
+    <addaction name="actionsallir"/>
+   </widget>
+   <addaction name="menuMenu"/>
+  </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionGuardar_partida">
+   <property name="text">
+    <string>Guardar partida</string>
+   </property>
+  </action>
+  <action name="actionCargar_partida">
+   <property name="text">
+    <string>Cargar partida</string>
+   </property>
+  </action>
+  <action name="actionVolver_al_inicio">
+   <property name="text">
+    <string>Volver al inicio</string>
+   </property>
+  </action>
+  <action name="actionsallir">
+   <property name="text">
+    <string>sallir</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

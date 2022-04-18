@@ -1,0 +1,40 @@
+<RCC>
+    <qresource prefix="/recursos"/>
+    <qresource prefix="/">
+        <file>recursos/Imagenes/1.png</file>
+        <file>recursos/Imagenes/2.png</file>
+        <file>recursos/Imagenes/3.png</file>
+        <file>recursos/Imagenes/abejorro.png</file>
+        <file>recursos/Imagenes/back.png</file>
+        <file>recursos/Imagenes/bala.png</file>
+        <file>recursos/Imagenes/bruja.png</file>
+        <file>recursos/Imagenes/calavera.png</file>
+        <file>recursos/Imagenes/fondo_menu.jpg</file>
+        <file>recursos/Imagenes/fondo_multijugador.jpg</file>
+        <file>recursos/Imagenes/fondo_multijugador_final.jpg</file>
+        <file>recursos/Imagenes/fondo_nivel1.png</file>
+        <file>recursos/Imagenes/fondo_nivel2.PNG</file>
+        <file>recursos/Imagenes/fondo_nivel3.PNG</file>
+        <file>recursos/Imagenes/gameover.jpg</file>
+        <file>recursos/Imagenes/guardar.png</file>
+        <file>recursos/Imagenes/guardian.png</file>
+        <file>recursos/Imagenes/informacion.jpg</file>
+        <file>recursos/Imagenes/informacion.png</file>
+        <file>recursos/Imagenes/jefe_final.png</file>
+        <file>recursos/Imagenes/load_game.png</file>
+        <file>recursos/Imagenes/Logo.png</file>
+        <file>recursos/Imagenes/multiplayer.png</file>
+        <file>recursos/Imagenes/new_game.png</file>
+        <file>recursos/Imagenes/pausa.png</file>
+        <file>recursos/Imagenes/personaje_principal.png</file>
+        <file>recursos/Imagenes/personaje_secundario.png</file>
+        <file>recursos/Imagenes/play.png</file>
+        <file>recursos/Imagenes/sprite_vidas.png</file>
+        <file>recursos/Imagenes/super_guardian.png</file>
+        <file>recursos/Imagenes/VACIO.png</file>
+        <file>recursos/musica/musica_menu.mp3</file>
+        <file>recursos/musica/musica_nivel1.mp3</file>
+        <file>recursos/musica/musica_nivel2.mp3</file>
+        <file>recursos/musica/musica_nivel3.mp3</file>
+    </qresource>
+</RCC>
