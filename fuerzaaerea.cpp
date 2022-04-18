@@ -1,6 +1,6 @@
 #include "fuerzaaerea.h"
 
-fuerzaAerea::fuerzaAerea()
+fuerzaaerea::fuerzaaerea()
 {
 
 }
