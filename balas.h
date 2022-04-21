@@ -17,4 +17,3 @@ public slots:
 };
 
 #endif // BALAS_H
-
