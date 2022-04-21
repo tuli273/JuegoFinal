@@ -33,8 +33,8 @@
    <widget class="QPushButton" name="boton_nuevapartida">
     <property name="geometry">
      <rect>
-      <x>405</x>
-      <y>370</y>
+      <x>270</x>
+      <y>390</y>
       <width>165</width>
       <height>23</height>
      </rect>
@@ -54,8 +54,8 @@ background-image: url(:/recursos/Imagenes/new_game.png);</string>
    <widget class="QPushButton" name="boton_cargarpartida">
     <property name="geometry">
      <rect>
-      <x>405</x>
-      <y>440</y>
+      <x>650</x>
+      <y>400</y>
       <width>170</width>
       <height>20</height>
      </rect>
@@ -344,9 +344,9 @@ color: rgb(255, 255, 255);</string>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">font: 75 12pt &quot;Trajan Pro 3&quot;;
+     <string notr="true">font: 75 15pt &quot;MS Sans Serif&quot;;
 border-image: url(:/recursos/Imagenes/VACIO.png);
-color: rgb(255, 255, 255);</string>
+color: rgb(7, 111, 0);</string>
     </property>
     <property name="text">
      <string>USER</string>
@@ -355,22 +355,31 @@ color: rgb(255, 255, 255);</string>
    <widget class="QLabel" name="label_clave">
     <property name="geometry">
      <rect>
-      <x>410</x>
+      <x>390</x>
       <y>440</y>
       <width>101</width>
       <height>25</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>MS Sans Serif</family>
+      <pointsize>15</pointsize>
+      <weight>9</weight>
+      <italic>false</italic>
+      <bold>false</bold>
+     </font>
+    </property>
     <property name="styleSheet">
-     <string notr="true">font: 75 12pt &quot;Trajan Pro 3&quot;;
+     <string notr="true">font: 75 15pt &quot;MS Sans Serif&quot;;
 border-image: url(:/recursos/Imagenes/VACIO.png);
-color: rgb(255, 255, 255);</string>
+color: rgb(16, 106, 0);</string>
     </property>
     <property name="text">
      <string>PASSWORD</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_usuario">
+   <widget class="QLineEdit" name="usuario">
     <property name="geometry">
      <rect>
       <x>510</x>
@@ -380,7 +389,7 @@ color: rgb(255, 255, 255);</string>
      </rect>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_clave">
+   <widget class="QLineEdit" name="clave">
     <property name="geometry">
      <rect>
       <x>510</x>
@@ -467,8 +476,8 @@ color: rgb(255, 255, 255);
    <widget class="QPushButton" name="boton_multijugador">
     <property name="geometry">
      <rect>
-      <x>405</x>
-      <y>500</y>
+      <x>450</x>
+      <y>510</y>
       <width>193</width>
       <height>23</height>
      </rect>
@@ -516,6 +525,70 @@ color: rgb(255, 255, 255);</string>
      <string/>
     </property>
    </widget>
+   <widget class="QPushButton" name="Registrar">
+    <property name="geometry">
+     <rect>
+      <x>380</x>
+      <y>560</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(83, 75, 17);</string>
+    </property>
+    <property name="text">
+     <string>Registrarse</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="Salir">
+    <property name="geometry">
+     <rect>
+      <x>510</x>
+      <y>620</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(83, 75, 17);</string>
+    </property>
+    <property name="text">
+     <string>Salir</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="Volver">
+    <property name="geometry">
+     <rect>
+      <x>630</x>
+      <y>560</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(83, 75, 17);</string>
+    </property>
+    <property name="text">
+     <string>Volver</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="Iniciar">
+    <property name="geometry">
+     <rect>
+      <x>380</x>
+      <y>560</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(83, 75, 17);</string>
+    </property>
+    <property name="text">
+     <string>iniciar</string>
+    </property>
+   </widget>
    <zorder>graphicsView</zorder>
    <zorder>boton_nuevapartida</zorder>
    <zorder>boton_cargarpartida</zorder>
@@ -535,8 +608,8 @@ color: rgb(255, 255, 255);</string>
    <zorder>label_inicio_de_sesion</zorder>
    <zorder>label_usuario</zorder>
    <zorder>label_clave</zorder>
-   <zorder>lineEdit_usuario</zorder>
-   <zorder>lineEdit_clave</zorder>
+   <zorder>usuario</zorder>
+   <zorder>clave</zorder>
    <zorder>boton_ingresar</zorder>
    <zorder>boton_cancelar</zorder>
    <zorder>boton_eliminar</zorder>
@@ -546,6 +619,10 @@ color: rgb(255, 255, 255);</string>
    <zorder>lineEdit3</zorder>
    <zorder>boton_partida3</zorder>
    <zorder>boton_informacion</zorder>
+   <zorder>Registrar</zorder>
+   <zorder>Salir</zorder>
+   <zorder>Volver</zorder>
+   <zorder>Iniciar</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -561,34 +638,32 @@ color: rgb(255, 255, 255);</string>
      <string>Menu</string>
     </property>
     <addaction name="actionGuardar_partida"/>
-    <addaction name="actionCargar_partida"/>
-    <addaction name="actionVolver_al_inicio"/>
-    <addaction name="actionsallir"/>
+    <addaction name="actioneliminar"/>
    </widget>
    <addaction name="menuMenu"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionGuardar_partida">
+   <property name="icon">
+    <iconset resource="recursos.qrc">
+     <normaloff>:/recursos/Imagenes/guardar.png</normaloff>:/recursos/Imagenes/guardar.png</iconset>
+   </property>
    <property name="text">
     <string>Guardar partida</string>
    </property>
   </action>
-  <action name="actionCargar_partida">
-   <property name="text">
-    <string>Cargar partida</string>
+  <action name="actioneliminar">
+   <property name="icon">
+    <iconset resource="recursos.qrc">
+     <normaloff>:/recursos/Imagenes/1.png</normaloff>:/recursos/Imagenes/1.png</iconset>
    </property>
-  </action>
-  <action name="actionVolver_al_inicio">
    <property name="text">
-    <string>Volver al inicio</string>
-   </property>
-  </action>
-  <action name="actionsallir">
-   <property name="text">
-    <string>sallir</string>
+    <string>Eliminar</string>
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="recursos.qrc"/>
+ </resources>
  <connections/>
 </ui>
