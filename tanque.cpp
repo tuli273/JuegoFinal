@@ -12,7 +12,7 @@ tanque::tanque(double x, double y, double ancho_, double largo_)
     ancho=ancho_; //asignar el ancho del tanque.
     largo=largo_; //asignar el largo del tanque.
     columnas =0;
-    filas=45;
+    filas=0;
     setPos(posx,posy);
     pixmap = new QPixmap(":/recursos/Imagenes/personaje_principal.png");
 }
@@ -106,6 +106,5 @@ void tanque::Disparo()
     filas=120;
     this->update(-ancho/2,-largo/2,ancho,largo);
 }
-
 
 

@@ -1,6 +1,11 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-
+bool cargado=false;//variable para saber que el .txt de los usuarios se cargo
+int nivel=1;
+QString user,contra;//strings que tienen el usuario y la contraseña ingresada
+int pn=0;//variable que tiene puntaje
+int vida=3;//variable que tiene las vidas
+int px1=10,py1=595;//variable con las posiciones de los jugadores
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -52,7 +57,7 @@ MainWindow::MainWindow(QWidget *parent)
     musica->setMedia(QUrl("qrc:/recursos/musica/musica_menu.mp3")); // le doy la cancion correspondiente
 
     //lineedit
-    ui->lineEdit_clave->setEchoMode(QLineEdit::Password); //esconder texto en el lineEdit
+    ui->clave->setEchoMode(QLineEdit::Password); //esconder texto en el lineEdit
 
     multijugador=false; //multijugador
 
@@ -371,14 +376,17 @@ void MainWindow::menu()
     ui->pausar->hide();//esconder boton
     ui->label_clave->hide(); //esconder boton
     ui->label_usuario->hide(); //esconder boton
-    ui->lineEdit_clave->hide(); //esconder boton
-    ui->lineEdit_usuario->hide(); //esconder boton
+    ui->clave->hide(); //esconder boton
+    ui->usuario->hide(); //esconder boton
     ui->label_inicio_de_sesion->hide(); //esconder boton
     ui->boton_ingresar->hide(); //esconder boton
     ui->boton_cancelar->hide(); //esconder boton
     ui->boton_eliminar->hide(); //esconder boton
     ui->boton_volveralmenu->hide();
     ui->label_ganador_multijugador->hide();
+    ui->Iniciar->hide();
+    ui->Registrar->hide();
+    ui->Volver->hide();
 }
 
 void MainWindow::nivel1()
@@ -406,7 +414,7 @@ void MainWindow::nivel1()
     srand(time(NULL)); // iniciar el time para la variable aleatoria
 
     musgo->hide(); //esconder lodo
-
+    nivel=1;
     //agregar personaje principal
     escena->addItem(tanque1); //agregar la chillin
 
@@ -480,7 +488,7 @@ void MainWindow::nivel2()
     puntos->setPuntaje(50); //actualizar puntaje
 
     musgo->hide();
-
+    nivel=2;
     if(partida==0) //condicion que pregunta si es una partida rapida o no
     {
         ui->guardar->hide(); //esonder boton
@@ -578,7 +586,7 @@ void MainWindow::nivel3()
     ui->guardar->show(); //mostrar boton
 
     puntos->setPuntaje(100);
-
+    nivel=3;
     if(partida==0)
     {
         ui->guardar->hide(); //esonder boton
@@ -881,6 +889,7 @@ void MainWindow::actualizar_puntaje(int p)
             p=p+10; //suma 10 a la variable ps
         }
     }
+    pn=p;
     puntos->aumentar_puntaje(p); //da el valor de p a los puntos
 }
 
@@ -1008,8 +1017,8 @@ void MainWindow::borrar_todos_botones()
     ui->lineEdit2->hide();//esconder boton
     ui->lineEdit3->hide();//esconder boton
     ui->guardar->hide(); //esconder boton
-    ui->lineEdit_clave->hide(); //esconder boton
-    ui->lineEdit_usuario->hide(); //esconder boton
+    ui->clave->hide(); //esconder boton
+    ui->usuario->hide(); //esconder boton
     ui->label_clave->hide(); //esconder boton
     ui->label_usuario->hide(); //esconder boton
     ui->label_inicio_de_sesion->hide(); //esconder boton
@@ -1020,158 +1029,10 @@ void MainWindow::borrar_todos_botones()
     ui->label_ganador_multijugador->hide();
     ui->label_ganador_multijugador->hide();
     ui->boton_informacion->hide();
-}
-
-void MainWindow::escribir_partidasguardadas(QString texto,int p_)
-{
-    ui->lineEdit1->show(); //mostrar boton
-    ui->lineEdit2->show();//mostrar boton
-    ui->lineEdit3->show();//mostrar boton
-
-    QFile archivo(texto); //leer el archivo
-    if(!archivo.open(QFile::ReadOnly)) //condicion que pregunta si no lo pudo abrir
-    {
-        QMessageBox::warning(this,"UUYYYY :V","ERROR AL ABRIR EL ARCHIVO"); //mensaje que dice que no se pudo leer
-    }
-    QTextStream in(&archivo); //crear un flujo de lectura
-    texto=in.readAll(); //leer todo el archivo
-    QStringList lista_archivo=texto.split(QLatin1Char(',')); //crear una lista de String y agregarle los valores, cada valor viene dado separado de una coma
-    archivo.close(); //cerrar archivo
-    int nivel=0; //iniciar variable nivel
-    name.clear();
-    pass.clear();
-    for(int i=0;i<lista_archivo.size();i++) //ciclo que recorre toda la lista
-    {
-        if(i==0){vidas->setVidas(lista_archivo.at(0).toInt());} //dar el valor de vidas
-        if(i==1){nivel=lista_archivo.at(2).toInt();} //dar el valor del nivel
-        if(i==2){name.append(lista_archivo.at(i));} //guardar el nombre
-        if(i==3){pass.append(lista_archivo.at(i));} //guardar la contraseña
-    }
-
-    if(name=="vacio")
-    {
-        if(pass=="vacio")
-        {
-            if(p_==1)
-            {
-                ui->lineEdit1->setText("<VACIO>"); //escribir el texto completo de la partida 1 guardada
-                ui->lineEdit1->setDisabled(true); //desabilitar escritura
-                ui->lineEdit1->setFont(QFont("Trajan Pro",10)); //cambiar formto a la letra
-            }
-
-            if(p_==2)
-            {
-                ui->lineEdit2->setText("<VACIO>"); //escribir el texto completo de la partida 1 guardada
-                ui->lineEdit2->setDisabled(true); //desabilitar escritura
-                ui->lineEdit2->setFont(QFont("Trajan Pro",10)); //cambiar formto a la letra
-            }
-            if(p_==3)
-            {
-                ui->lineEdit3->setText("<VACIO>"); //escribir el texto completo de la partida 1 guardada
-                ui->lineEdit3->setDisabled(true); //desabilitar escritura
-                ui->lineEdit3->setFont(QFont("Trajan Pro",10)); //cambiar formto a la letra
-            }
-        }
-    }
-
-    if(name!="vacio")
-    {
-        if(pass!="vacio")
-        {
-            QString Texto1="Nivel: "; //crear variable string y añadir Nivel
-            Texto1.append(lista_archivo.at(1)); //agregar el nivel
-            Texto1.append(" Vidas: "); //agreagr Vidas:
-            Texto1.append(lista_archivo.at(0)); //agregrar puntos
-
-            if(p_==1) //condicion que pregunta si la partida abierta fue la 1
-            {
-                ui->lineEdit1->setText(Texto1); //escribir el texto completo de la partida 1 guardada
-                ui->lineEdit1->setDisabled(true); //desabilitar escritura
-                ui->lineEdit1->setFont(QFont("Trajan Pro",10)); //cambiar formto a la letra
-            }
-            if(p_==2) //condicion que pregunta si la partida abierta fue la 2
-            {
-                ui->lineEdit2->setText(Texto1); //escribir el texto completo de la partida 2 guardada
-                ui->lineEdit2->setDisabled(true); //desabilitar escritura
-                ui->lineEdit2->setFont(QFont("Trajan Pro",10)); //cambiar formto a la letra
-            }
-            if(p_==3) //condicion que pregunta si la partida abierta fue la 3
-            {
-                ui->lineEdit3->setText(Texto1); //escribir el texto completo de la partida 3 guardada
-                ui->lineEdit3->setDisabled(true); //desabilitar escritura
-                ui->lineEdit3->setFont(QFont("Trajan Pro",10)); //cambiar formto a la letra
-            }
-        }
-    }
-
-}
-
-int MainWindow::leer_partidarguardadas(QString texto)
-{
-    QFile archivo(texto); //leer el archivo
-    if(!archivo.open(QFile::ReadOnly)) //condicion que pregunta si no lo pudo abrir
-    {
-        QMessageBox::warning(this,"UUYYYY :V","ERROR AL ABRIR EL ARCHIVO"); //mensaje que dice que no se pudo leer
-    }
-    QTextStream in(&archivo); //crear un flujo de lectura
-    texto=in.readAll(); //leer todo el archivo
-    QStringList lista_archivo=texto.split(QLatin1Char(',')); //crear una lista de
-    archivo.close(); //cerrar el archivo
-    int nivel=0; //iniciari variable nivel
-    for(int i=0;i<lista_archivo.size();i++) //ciclo que recorre toda la lista
-    {
-        if(i==0){vidas->setVidas(lista_archivo.at(0).toInt());} //dar el valor de vidas
-        if(i==1){nivel=lista_archivo.at(1).toInt();} //dar el valor del nivel
-    }
-    qDebug()<<"aqui2"<<" "<<nivel;
-    return nivel; //regresar el nivel
-}
-
-bool MainWindow::revisar_usuario_clave(QString texto)
-{
-    QFile archivo(texto); //leer el archivo
-    if(!archivo.open(QFile::ReadOnly)) //condicion que pregunta si no lo pudo abrir
-    {
-        QMessageBox::warning(this,"UUYYYY :V","ERROR AL ABRIR EL ARCHIVO"); //mensaje que dice que no se pudo leer
-    }
-    QTextStream in(&archivo); //crear un flujo de lectura
-    texto=in.readAll(); //leer todo el archivo
-    QStringList lista_archivo=texto.split(QLatin1Char(',')); //crear una lista de
-    archivo.close(); //cerrar el archivo
-
-    name.clear();
-    pass.clear();
-
-    for(int i=0;i<lista_archivo.size();i++) //ciclo que recorre toda la lista
-    {
-        if(i==2) //condicion que pregunta si es el nombre de usuario
-        {
-            name.append(lista_archivo.at(i));//guardar usuario en variable
-        }
-        if(i==3) //condicion que pregunta si es la clave
-        {
-            pass.append(lista_archivo.at(i));//guardar clave en variable
-        }
-    }
-
-    QString usuario=NULL; //variable que me guarda el nombre de usuario ingresado
-    QString clave=NULL; //variable que me guarda la clave ingresada
-    usuario.append(ui->lineEdit_usuario->text()); //tomar texto del lineEdit
-    clave.append(ui->lineEdit_clave->text()); //tomar texto del lineEdit
-
-    if(clave==pass) //condicion que pregunta si la clave ingresada es igual a la guardada
-    {
-        if(usuario==name)//condicion que pregunta si el usuario ingresado es igual al guardado
-        {
-            return true; //regresa true
-        }
-
-        return false; //regresa false
-    }
-    else
-    {
-        return false; //regresa false
-    }
+    ui->Salir->hide();
+    ui->Registrar->hide();
+    ui->Volver->hide();
+    ui->Iniciar->hide();
 }
 
 void MainWindow::gano()
@@ -1193,53 +1054,59 @@ void MainWindow::gano()
     ui->guardar->hide(); //esconder boton
     ui->pausar->hide(); //esconder boton
     ui->boton_volveralmenu->show();
-    ui->graphicsView->setBackgroundBrush(QPixmap(":/recursos/Imagenes/you_did_it.jpg"));
+    ui->graphicsView->setBackgroundBrush(QPixmap(":/recursos/Imagenes/you_did_it.jpg.png"));
 }
 
 void MainWindow::actualizar_sprite_vidas()
 {
     if(vidas->getVidas()==3) //condicion que pregunta si las vidas son diferentes de 0
     {
+        vida=3;
         Sprite_vidas->setcolumna_fila(0,0); //actualizar sprite
     }
 
     if(vidas->getVidas()==2) //condicion que pregunta si las vidas son diferentes de 0
     {
+        vida=2;
         Sprite_vidas->setcolumna_fila(50,0); //actualizar sprite
     }
 
     if(vidas->getVidas()==1) //condicion que pregunta si las vidas son diferentes de 0
     {
+        vida=1;
         Sprite_vidas->setcolumna_fila(0,50); //actualizar sprite
     }
 }
 
 void MainWindow::on_boton_nuevapartida_clicked()
-{
+{/*este boton carga el menu para registrarse*/
+    ui->boton_cargarpartida->hide();
+    ui->boton_nuevapartida->hide();
+    ui->boton_multijugador->hide();
+    ui->Registrar->show();
+    ui->Iniciar->hide();
+    ui->Volver->show();
+    ui->label_clave->show();
+    ui->label_usuario->show();
+    ui->usuario->show();
+    ui->clave->show();
     multijugador=false;
-    musica->stop(); //para cancion menu
-    tanque1->setPosx(10);
-    vidas->setVidas(3); //dar 3 vidas
-    puntos->setPuntaje(0); //dar un puntaje de 0
-    borrar_todos_botones(); // borrar todos los botones
-    ui->pausar->show(); //mostrar boton pausa
-    partida=0;
-    nivel2(); // ir a funcion nivel1
 }
 
 void MainWindow::on_boton_cargarpartida_clicked()
 {
     multijugador=false;
-    ui->boton_cargarpartida->hide(); //esconde boton cargar partida
-    ui->boton_nuevapartida->hide(); //esconde boton nueeva partida
-    ui->boton_partida1->show(); //muestra boton partida1
-    ui->boton_partida2->show(); //muestra boton partida2
-    ui->boton_partida3->show(); //muestra boton partida3
-    ui->boton_regresar->show(); //muestra boton regresar
+    /*este boton carga el menu de cargar partida */
+    ui->boton_cargarpartida->hide();
+    ui->boton_nuevapartida->hide();
     ui->boton_multijugador->hide();
-    escribir_partidasguardadas("partida1.txt",1); //escribe en pantalla los datos guardados de la partida 1
-    escribir_partidasguardadas("partida2.txt",2); //escribe en pantalla los datos guardados de la partida 2
-    escribir_partidasguardadas("partida3.txt",3); //escribe en pantalla los datos guardados de la partida 3
+    ui->Registrar->hide();
+    ui->Iniciar->show();
+    ui->Volver->show();
+    ui->label_clave->show();
+    ui->label_usuario->show();
+    ui->usuario->show();
+    ui->clave->show();
 }
 
 void MainWindow::on_boton_regresar_clicked()
@@ -1248,60 +1115,9 @@ void MainWindow::on_boton_regresar_clicked()
     ui->boton_cargarpartida->show(); //mostar boton cargar partida
     ui->boton_multijugador->show();
     ui->boton_informacion->show();
-    ui->lineEdit_usuario->setText("");
-    ui->lineEdit_clave->setText("");
+    ui->usuario->setText("");
+    ui->clave->setText("");
     menu(); //ir a funcion menu
-}
-
-void MainWindow::on_boton_partida1_clicked()
-{
-    partida=1; //partida 1
-    ui->boton_partida2->hide(); //esconder boton
-    ui->boton_partida3->hide(); //esconder boton
-    ui->lineEdit2->hide(); //esconder boton
-    ui->lineEdit3->hide(); //esconder boton
-    ui->lineEdit_clave->show(); //mostrar boton
-    ui->lineEdit_usuario->show(); //mostrar boton
-    ui->label_clave->show(); //mostrar boton
-    ui->label_usuario->show(); //mostrar boton
-    ui->label_inicio_de_sesion->show(); //mostrar boton
-    ui->boton_ingresar->show(); //mostrar boton
-    ui->boton_cancelar->show(); //mostrar boton
-    ui->boton_eliminar->show(); //mostrar boton
-}
-
-void MainWindow::on_boton_partida2_clicked()
-{
-    partida = 2; //partida 2
-    ui->boton_partida1->hide(); //esconder boton
-    ui->boton_partida3->hide(); //esconder boton
-    ui->lineEdit1->hide(); //esconder boton
-    ui->lineEdit3->hide(); //esconder boton
-    ui->lineEdit_clave->show(); //mostrar boton
-    ui->lineEdit_usuario->show(); //mostrar boton
-    ui->label_clave->show(); //mostrar boton
-    ui->label_usuario->show(); //mostrar boton
-    ui->label_inicio_de_sesion->show(); //mostrar boton
-    ui->boton_ingresar->show(); //mostrar boton
-    ui->boton_cancelar->show(); //mostrar boton
-    ui->boton_eliminar->show(); //mostrar boton
-}
-
-void MainWindow::on_boton_partida3_clicked()
-{
-    partida = 3; //partida 3
-    ui->boton_partida1->hide(); //esconder boton
-    ui->boton_partida2->hide(); //esconder boton
-    ui->lineEdit1->hide(); //esconder boton
-    ui->lineEdit2->hide(); //esconder boton
-    ui->lineEdit_clave->show(); //mostrar boton
-    ui->lineEdit_usuario->show(); //mostrar boton
-    ui->label_clave->show(); //mostrar boton
-    ui->label_usuario->show(); //mostrar boton
-    ui->label_inicio_de_sesion->show(); //mostrar boton
-    ui->boton_ingresar->show(); //mostrar boton
-    ui->boton_cancelar->show(); //mostrar boton
-    ui->boton_eliminar->show(); //mostrar boton
 }
 
 void MainWindow::on_pausar_clicked()
@@ -1374,660 +1190,6 @@ void MainWindow::on_pausar_clicked()
             ui->boton_volveralmenu->hide();
         }
     }
-
-}
-
-void MainWindow::on_guardar_clicked()
-{
-    timerfuerzaaerea->stop(); //parar timer
-    timerfuerzaaerea2->stop(); //parar timer
-    timerfuerzaaerea3->stop(); //parar timer
-//    escena->addItem(escogerpartida);
-//    escogerpartida->texto("Donde desea guardar partida?");
-//    ui->boton_guardarpartida1->show(); //mostrar boton
-//    ui->boton_guardarpartida2->show(); //mostrar boton
-//    ui->boton_guardarpartida3->show(); //mostrar boton
-
-    if(partida==1) //condicion que pregunta si la partida es la 1
-    {
-        int nivel=0; //variable que me controla el nivel
-        if(puntos->getPuntaje()<50) //condicion que pregunta si el puntaje es menor a 50
-        {
-            nivel=1; //nivel 1
-        }
-        if(puntos->getPuntaje()>=50 && puntos->getPuntaje()<100) //condicion que pregunta si el puntaje esta entre 50 y 90
-        {
-            nivel=2; //nivel 2
-        }
-        if(puntos->getPuntaje()>=100) //condicion que pregunta si el puntaje es mayor o igual a 100
-        {
-            nivel=3; //nivel 3
-        }
-
-        QString v=QString::number(vidas->getVidas()); //convertir las vidas a string
-        QString n=QString::number(nivel); //convertir el nivel a string
-        QString texto; //variable string
-        texto.append(v); //agregar las vidas
-        texto.append(","); //agregar coma
-        texto.append(n); //agregar nivel
-        texto.append(","); //agregar coma
-        texto.append(name); //agregar usuario
-        texto.append(","); //agregar coma
-        texto.append(pass); //agregar contraseña
-
-        QFile archivo("partida1.txt"); //leer el archivo
-        if(!archivo.open(QFile::WriteOnly)) //condicion que pregunta si no lo pudo abrir
-        {
-            QMessageBox::warning(this,"UUYYYY :V","ERROR AL ABRIR EL ARCHIVO"); //mensaje que dice que no se pudo leer
-        }
-
-        QTextStream out(&archivo); //flujo de escritura
-        out<<texto; //escribir sobre el archivo
-        archivo.flush(); //cerrar procesos sobre archivo
-        archivo.close(); //cerrar archivo
-        QMessageBox::information(this,"Guardar partida","partida guardada exitosamente");
-        ui->pausar->setFocus(); //dar el focus a el boton pausa
-    }
-
-    if(partida==2) //condicion que pregunta si la partida es la 2
-    {
-        int nivel=0; //variable que me controla el nivel
-        if(puntos->getPuntaje()<50) //condicion que pregunta si el puntaje es menor a 50
-        {
-            nivel=1; //nivel 1
-        }
-        if(puntos->getPuntaje()>=50 && puntos->getPuntaje()<100) //condicion que pregunta si el puntaje esta entre 50 y 90
-        {
-            nivel=2; //nivel 2
-        }
-        if(puntos->getPuntaje()>=100) //condicion que pregunta si el puntaje es mayor o igual a 100
-        {
-            nivel=3; //nivel 3
-        }
-
-        QString v=QString::number(vidas->getVidas()); //convertir las vidas a string
-        QString n=QString::number(nivel); //convertir el nivel a string
-        QString texto; //variable string
-        texto.append(v); //agregar las vidas
-        texto.append(","); //agregar coma
-        texto.append(n); //agregar nivel
-        texto.append(","); //agregar coma
-        texto.append(name); //agregar usuario
-        texto.append(","); //agregar coma
-        texto.append(pass); //agregar contraseña
-
-        QFile archivo("partida2.txt"); //leer el archivo
-        if(!archivo.open(QFile::WriteOnly)) //condicion que pregunta si no lo pudo abrir
-        {
-            QMessageBox::warning(this,"UUYYYY :V","ERROR AL ABRIR EL ARCHIVO"); //mensaje que dice que no se pudo leer
-        }
-
-        QTextStream out(&archivo); //flujo de escritura
-        out<<texto; //escribir sobre el archivo
-        archivo.flush(); //cerrar procesos sobre archivo
-        archivo.close(); //cerrar archivo
-        QMessageBox::information(this,"Guardar partida","partida guardada exitosamente");
-        ui->pausar->setFocus(); //dar el focus a el boton pausa
-    }
-
-    if(partida==3) //condicion que pregunta si la partida es la 3
-    {
-        int nivel=0; //variable que me controla el nivel
-        if(puntos->getPuntaje()<50) //condicion que pregunta si el puntaje es menor a 50
-        {
-            nivel=1; //nivel 1
-        }
-        if(puntos->getPuntaje()>=50 && puntos->getPuntaje()<100) //condicion que pregunta si el puntaje esta entre 50 y 90
-        {
-            nivel=2; //nivel 2
-        }
-        if(puntos->getPuntaje()>=100) //condicion que pregunta si el puntaje es mayor o igual a 100
-        {
-            nivel=3; //nivel 3
-        }
-
-        QString v=QString::number(vidas->getVidas()); //convertir las vidas a string
-        QString n=QString::number(nivel); //convertir el nivel a string
-        QString texto; //variable string
-        texto.append(v); //agregar las vidas
-        texto.append(","); //agregar coma
-        texto.append(n); //agregar nivel
-        texto.append(","); //agregar coma
-        texto.append(name); //agregar usuario
-        texto.append(","); //agregar coma
-        texto.append(pass); //agregar contraseña
-
-        QFile archivo("partida3.txt"); //leer el archivo
-        if(!archivo.open(QFile::WriteOnly)) //condicion que pregunta si no lo pudo abrir
-        {
-            QMessageBox::warning(this,"UUYYYY :V","ERROR AL ABRIR EL ARCHIVO"); //mensaje que dice que no se pudo leer
-        }
-
-        QTextStream out(&archivo); //flujo de escritura
-        out<<texto; //escribir sobre el archivo
-        archivo.flush(); //cerrar procesos sobre archivo
-        archivo.close(); //cerrar archivo
-        QMessageBox::information(this,"Guardar partida","partida guardada exitosamente");
-        ui->pausar->setFocus(); //dar el focus a el boton pausa
-    }
-}
-
-void MainWindow::on_boton_guardarpartida1_clicked()
-{
-    int nivel=0; //variable que me controla el nivel
-    if(puntos->getPuntaje()<50) //condicion que pregunta si el puntaje es menor a 50
-    {
-        nivel=1; //nivel 1
-    }
-    if(puntos->getPuntaje()>=50 && puntos->getPuntaje()<100) //condicion que pregunta si el puntaje esta entre 50 y 90
-    {
-        nivel=2; //nivel 2
-    }
-    if(puntos->getPuntaje()>=100) //condicion que pregunta si el puntaje es mayor o igual a 100
-    {
-        nivel=3; //nivel 3
-    }
-
-    QString v=QString::number(vidas->getVidas()); //convertir las vidas a string
-    QString n=QString::number(nivel); //convertir el nivel a string
-    QString texto; //variable string
-    texto.append(v); //agregar las vidas
-    texto.append(","); //agregar coma
-    texto.append(n); //agregar nivel
-
-    QFile archivo("partida1.txt"); //leer el archivo
-    if(!archivo.open(QFile::WriteOnly)) //condicion que pregunta si no lo pudo abrir
-    {
-        QMessageBox::warning(this,"UUYYYY :V","ERROR AL ABRIR EL ARCHIVO"); //mensaje que dice que no se pudo leer
-    }
-
-    QTextStream out(&archivo); //flujo de escritura
-    out<<texto; //escribir sobre el archivo
-    archivo.flush(); //cerrar procesos sobre archivo
-    archivo.close(); //cerrar archivo
-
-    ui->boton_guardarpartida1->hide(); //esconder boton
-    ui->boton_guardarpartida2->hide(); //esconder boton
-    ui->boton_guardarpartida3->hide(); //esconder boton
-    escogerpartida->hide(); //esconder texto
-    QMessageBox::information(this,"Guardar partida","partida guardada exitosamente");
-    ui->pausar->setFocus(); //dar el focus a el boton pausa
-}
-
-void MainWindow::on_boton_guardarpartida2_clicked()
-{
-    int nivel=0; //variable que me controla el nivel
-    if(puntos->getPuntaje()<50) //condicion que pregunta si el puntaje es menor a 50
-    {
-        nivel=1; //nivel 1
-    }
-    if(puntos->getPuntaje()>=50 && puntos->getPuntaje()<100) //condicion que pregunta si el puntaje esta entre 50 y 90
-    {
-        nivel=2; //nivel 2
-    }
-    if(puntos->getPuntaje()>=100) //condicion que pregunta si el puntaje es mayor o igual a 100
-    {
-        nivel=3; //nivel 3
-    }
-
-    QString v=QString::number(vidas->getVidas()); //convertir las vidas a string
-    QString n=QString::number(nivel); //convertir el nivel a string
-    QString texto; //variable string
-    texto.append(v); //agregar las vidas
-    texto.append(","); //agregar coma
-    texto.append(","); //agregar coma
-    texto.append(n); //agregar nivel
-
-    QFile archivo("partida2.txt"); //leer el archivo
-    if(!archivo.open(QFile::WriteOnly)) //condicion que pregunta si no lo pudo abrir
-    {
-        QMessageBox::warning(this,"UUYYYY :V","ERROR AL ABRIR EL ARCHIVO"); //mensaje que dice que no se pudo leer
-    }
-
-    QTextStream out(&archivo); //flujo de escritura
-    out<<texto; //escribir sobre el archivo
-    archivo.flush(); //cerrar procesos sobre archivo
-    archivo.close(); //cerrar archivo
-
-    ui->boton_guardarpartida1->hide(); //esconder boton
-    ui->boton_guardarpartida2->hide(); //esconder boton
-    ui->boton_guardarpartida3->hide(); //esconder boton
-    escogerpartida->hide(); //esconder texto
-    QMessageBox::information(this,"Guardar partida","partida guardada exitosamente");
-    ui->pausar->setFocus(); //dar el focus a el boton pausa
-}
-
-void MainWindow::on_boton_guardarpartida3_clicked()
-{
-    int nivel=0; //variable que me controla el nivel
-    if(puntos->getPuntaje()<50) //condicion que pregunta si el puntaje es menor a 50
-    {
-        nivel=1; //nivel 1
-    }
-    if(puntos->getPuntaje()>=50 && puntos->getPuntaje()<100) //condicion que pregunta si el puntaje esta entre 50 y 90
-    {
-        nivel=2; //nivel 2
-    }
-    if(puntos->getPuntaje()>=100) //condicion que pregunta si el puntaje es mayor o igual a 100
-    {
-        nivel=3; //nivel 3
-    }
-
-    QString v=QString::number(vidas->getVidas()); //convertir las vidas a string
-    QString n=QString::number(nivel); //convertir el nivel a string
-    QString texto; //variable string
-    texto.append(v); //agregar las vidas
-    texto.append(","); //agregar coma
-    texto.append(","); //agregar coma
-    texto.append(n); //agregar nivel
-
-    QFile archivo("partida3.txt"); //leer el archivo
-    if(!archivo.open(QFile::WriteOnly)) //condicion que pregunta si no lo pudo abrir
-    {
-        QMessageBox::warning(this,"UUYYYY :V","ERROR AL ABRIR EL ARCHIVO"); //mensaje que dice que no se pudo leer
-    }
-
-    QTextStream out(&archivo); //flujo de escritura
-    out<<texto; //escribir sobre el archivo
-    archivo.flush(); //cerrar procesos sobre archivo
-    archivo.close(); //cerrar archivo
-
-    ui->boton_guardarpartida1->hide(); //esconder boton
-    ui->boton_guardarpartida2->hide(); //esconder boton
-    ui->boton_guardarpartida3->hide(); //esconder boton
-    escogerpartida->hide(); //esconder texto
-    QMessageBox::information(this,"Guardar partida","partida guardada exitosamente");
-    ui->pausar->setFocus(); //dar el focus a el boton pausa
-}
-
-void MainWindow::on_boton_ingresar_clicked()
-{
-    if(partida==1) //condicion que pregunta si se selecciono la partida1
-    {
-        QString direccion="partida1.txt";
-        QString texto;
-        QFile archivo(direccion); //leer el archivo
-        if(!archivo.open(QFile::ReadOnly)) //condicion que pregunta si no lo pudo abrir
-        {
-            QMessageBox::warning(this,"UUYYYY :V","ERROR AL ABRIR EL ARCHIVO"); //mensaje que dice que no se pudo leer
-        }
-        QTextStream in(&archivo); //crear un flujo de lectura
-        texto=in.readAll(); //leer todo el archivo
-        QStringList lista_archivo=texto.split(QLatin1Char(',')); //crear una lista de
-        archivo.flush();
-        archivo.close(); //cerrar el archivo
-
-        name.clear();
-        pass.clear();
-
-        for(int i=0;i<lista_archivo.size();i++) //ciclo que recorre toda la lista
-        {
-            if(i==2) //condicion que pregunta si es el nombre de usuario
-            {
-                name.append(lista_archivo.at(i));//guardar usuario en variable
-            }
-            if(i==3) //condicion que pregunta si es la clave
-            {
-                pass.append(lista_archivo.at(i));//guardar clave en variable
-            }
-        }
-
-        if(name=="vacio")
-        {
-            QString usuario; //variable que me guarda el nombre de usuario ingresado
-            QString clave; //variable que me guarda la clave ingresada
-            usuario.clear();
-            clave.clear();
-            usuario.append(ui->lineEdit_usuario->text()); //tomar texto del lineEdit
-            clave.append(ui->lineEdit_clave->text()); //tomar texto del lineEdit
-            QString Texto1; //variable string
-            Texto1.append("3"); //agregar las vidas
-            Texto1.append(","); //agregar coma
-            Texto1.append("1"); //agregar nivel
-            Texto1.append(","); //agregar coma
-            Texto1.append(usuario); //agregar usuario
-            Texto1.append(","); //agregar coma
-            Texto1.append(clave); //agregar contraseña
-
-            QFile archivo(direccion); //leer el archivo
-            if(!archivo.open(QFile::WriteOnly | QFile::Text)) //condicion que pregunta si no lo pudo abrir
-            {
-                QMessageBox::warning(this,"UUYYYY :V","NO ABRE EL ARCHIVO PARA ESCRIBIR"); //mensaje que dice que no se pudo leer
-            }
-            QTextStream out(&archivo); //flujo de escritura
-            out<<Texto1; //escribir sobre el archivo
-            archivo.flush(); //cerrar procesos sobre archivo
-            archivo.close(); //cerrar archivo
-            QMessageBox::information(this,"Crear usuario","usuario creado exitosamente");
-        }
-
-        if(revisar_usuario_clave(direccion)) //condicion que pregunta si se ingreso correctamente la clave y el usuario
-        {
-            qDebug()<<"aqui1";
-            if(leer_partidarguardadas(direccion)==1) //pregunta si el nivel es 1
-            {
-                borrar_todos_botones(); //borrar todos los botones
-                ui->pausar->show(); //mostrar boton pausa
-                nivel1(); //ir a funcion nivel1
-            }
-            if(leer_partidarguardadas(direccion)==2) //condicion que pregunta si el nivel es 2
-            {
-                borrar_todos_botones(); //borrar botones
-                ui->pausar->show(); //mostrar boton pausa
-                nivel2(); // ir a funcion nivel2
-            }
-            if(leer_partidarguardadas(direccion)==3) //condicion que pregunta si el nivel es 3
-            {
-                borrar_todos_botones(); //borrar todos los botones
-                ui->pausar->show(); //mostrar boton pausa
-                nivel3(); //ir a funcion nivel 3
-            }
-        }
-        if(!revisar_usuario_clave(direccion))
-        {
-            QMessageBox::information(this,"incorrecto","clave o usuario equivocado");
-        }
-    }
-
-    if(partida==2) //condicion que pregunta si se selecciono la partida1
-    {
-        QString direccion="partida2.txt";
-        QString texto;
-        QFile archivo(direccion); //leer el archivo
-        if(!archivo.open(QFile::ReadOnly)) //condicion que pregunta si no lo pudo abrir
-        {
-            QMessageBox::warning(this,"UUYYYY :V","ERROR AL ABRIR EL ARCHIVO"); //mensaje que dice que no se pudo leer
-        }
-        QTextStream in(&archivo); //crear un flujo de lectura
-        texto=in.readAll(); //leer todo el archivo
-        QStringList lista_archivo=texto.split(QLatin1Char(',')); //crear una lista de
-        archivo.flush();
-        archivo.close(); //cerrar el archivo
-
-        name.clear();
-        pass.clear();
-
-        for(int i=0;i<lista_archivo.size();i++) //ciclo que recorre toda la lista
-        {
-            if(i==3) //condicion que pregunta si es el nombre de usuario
-            {
-                name.append(lista_archivo.at(i));//guardar usuario en variable
-            }
-            if(i==4) //condicion que pregunta si es la clave
-            {
-                pass.append(lista_archivo.at(i));//guardar clave en variable
-            }
-        }
-
-        if(name=="vacio")
-        {
-            QString usuario; //variable que me guarda el nombre de usuario ingresado
-            QString clave; //variable que me guarda la clave ingresada
-            usuario.clear();
-            clave.clear();
-            usuario.append(ui->lineEdit_usuario->text()); //tomar texto del lineEdit
-            clave.append(ui->lineEdit_clave->text()); //tomar texto del lineEdit
-            QString Texto1; //variable string
-            Texto1.append("3"); //agregar las vidas
-            Texto1.append(","); //agregar coma
-            Texto1.append("1"); //agregar nivel
-            Texto1.append(","); //agregar coma
-            Texto1.append(usuario); //agregar usuario
-            Texto1.append(","); //agregar coma
-            Texto1.append(clave); //agregar contraseña
-
-            QFile archivo(direccion); //leer el archivo
-            if(!archivo.open(QFile::WriteOnly | QFile::Text)) //condicion que pregunta si no lo pudo abrir
-            {
-                QMessageBox::warning(this,"UUYYYY :V","NO ABRE EL ARCHIVO PARA ESCRIBIR"); //mensaje que dice que no se pudo leer
-            }
-            QTextStream out(&archivo); //flujo de escritura
-            out<<Texto1; //escribir sobre el archivo
-            archivo.flush(); //cerrar procesos sobre archivo
-            archivo.close(); //cerrar archivo
-            QMessageBox::information(this,"Crear usuario","usuario creado exitosamente");
-        }
-
-        if(revisar_usuario_clave(direccion)) //condicion que pregunta si se ingreso correctamente la clave y el usuario
-        {
-            if(leer_partidarguardadas(direccion)==1) //pregunta si el nivel es 1
-            {
-                borrar_todos_botones(); //borrar todos los botones
-                ui->pausar->show(); //mostrar boton pausa
-                nivel1(); //ir a funcion nivel1
-            }
-            if(leer_partidarguardadas(direccion)==2) //condicion que pregunta si el nivel es 2
-            {
-                borrar_todos_botones(); //borrar botones
-                ui->pausar->show(); //mostrar boton pausa
-                nivel2(); // ir a funcion nivel2
-            }
-            if(leer_partidarguardadas(direccion)==3) //condicion que pregunta si el nivel es 3
-            {
-                borrar_todos_botones(); //borrar todos los botones
-                ui->pausar->show(); //mostrar boton pausa
-                nivel3(); //ir a funcion nivel 3
-            }
-        }
-        if(!revisar_usuario_clave(direccion))
-        {
-            QMessageBox::information(this,"incorrecto","clave o usuario equivocado");
-        }
-    }
-
-    if(partida==3) //condicion que pregunta si se selecciono la partida1
-    {
-        QString direccion="partida3.txt";
-        QString texto;
-        QFile archivo(direccion); //leer el archivo
-        if(!archivo.open(QFile::ReadOnly)) //condicion que pregunta si no lo pudo abrir
-        {
-            QMessageBox::warning(this,"UUYYYY :V","ERROR AL ABRIR EL ARCHIVO"); //mensaje que dice que no se pudo leer
-        }
-        QTextStream in(&archivo); //crear un flujo de lectura
-        texto=in.readAll(); //leer todo el archivo
-        QStringList lista_archivo=texto.split(QLatin1Char(',')); //crear una lista de
-        archivo.flush();
-        archivo.close(); //cerrar el archivo
-
-        name.clear();
-        pass.clear();
-
-        for(int i=0;i<lista_archivo.size();i++) //ciclo que recorre toda la lista
-        {
-            if(i==3) //condicion que pregunta si es el nombre de usuario
-            {
-                name.append(lista_archivo.at(i));//guardar usuario en variable
-            }
-            if(i==4) //condicion que pregunta si es la clave
-            {
-                pass.append(lista_archivo.at(i));//guardar clave en variable
-            }
-        }
-
-        if(name=="vacio")
-        {
-            QString usuario; //variable que me guarda el nombre de usuario ingresado
-            QString clave; //variable que me guarda la clave ingresada
-            usuario.clear();
-            clave.clear();
-            usuario.append(ui->lineEdit_usuario->text()); //tomar texto del lineEdit
-            clave.append(ui->lineEdit_clave->text()); //tomar texto del lineEdit
-            QString Texto1; //variable string
-            Texto1.append("3"); //agregar las vidas
-            Texto1.append(","); //agregar coma
-            Texto1.append("1"); //agregar nivel
-            Texto1.append(","); //agregar coma
-            Texto1.append(usuario); //agregar usuario
-            Texto1.append(","); //agregar coma
-            Texto1.append(clave); //agregar contraseña
-
-            QFile archivo(direccion); //leer el archivo
-            if(!archivo.open(QFile::WriteOnly | QFile::Text)) //condicion que pregunta si no lo pudo abrir
-            {
-                QMessageBox::warning(this,"UUYYYY :V","NO ABRE EL ARCHIVO PARA ESCRIBIR"); //mensaje que dice que no se pudo leer
-            }
-            QTextStream out(&archivo); //flujo de escritura
-            out<<Texto1; //escribir sobre el archivo
-            archivo.flush(); //cerrar procesos sobre archivo
-            archivo.close(); //cerrar archivo
-            QMessageBox::information(this,"Crear usuario","usuario creado exitosamente");
-        }
-
-        if(revisar_usuario_clave(direccion)) //condicion que pregunta si se ingreso correctamente la clave y el usuario
-        {
-            if(leer_partidarguardadas(direccion)==1) //pregunta si el nivel es 1
-            {
-                borrar_todos_botones(); //borrar todos los botones
-                ui->pausar->show(); //mostrar boton pausa
-                nivel1(); //ir a funcion nivel1
-            }
-            if(leer_partidarguardadas(direccion)==2) //condicion que pregunta si el nivel es 2
-            {
-                borrar_todos_botones(); //borrar botones
-                ui->pausar->show(); //mostrar boton pausa
-                nivel2(); // ir a funcion nivel2
-            }
-            if(leer_partidarguardadas(direccion)==3) //condicion que pregunta si el nivel es 3
-            {
-                borrar_todos_botones(); //borrar todos los botones
-                ui->pausar->show(); //mostrar boton pausa
-                nivel3(); //ir a funcion nivel 3
-            }
-        }
-        if(!revisar_usuario_clave(direccion))
-        {
-            QMessageBox::information(this,"incorrecto","clave o usuario equivocado");
-        }
-    }
-
-    ui->lineEdit_usuario->setText("");
-    ui->lineEdit_clave->setText("");
-}
-
-void MainWindow::on_boton_cancelar_clicked()
-{
-    ui->label_clave->hide(); //esconder boton
-    ui->label_usuario->hide(); //esconder boton
-    ui->lineEdit_clave->hide(); //esconder boton
-    ui->lineEdit_usuario->hide(); //esconder boton
-    ui->label_inicio_de_sesion->hide(); //esconder boton
-    ui->boton_ingresar->hide(); //esconder boton
-    ui->boton_cancelar->hide(); //esconder boton
-    ui->boton_eliminar->hide(); //esoncer boton
-    if(partida==1) //condicion que pregunta si se habia seleccionado la partida 1
-    {
-        ui->lineEdit2->show(); //mostrar boton
-        ui->lineEdit3->show(); //mostrar boton
-        ui->boton_partida2->show(); //mostrar boton
-        ui->boton_partida3->show(); //mostrar boton
-    }
-    if(partida==2) //condicion que pregunta si se habia seleccionado la partida 2
-    {
-        ui->lineEdit1->show(); //mostrar boton
-        ui->lineEdit3->show(); //mostrar boton
-        ui->boton_partida1->show(); //mostrar boton
-        ui->boton_partida3->show(); //mostrar boton
-    }
-    if(partida==3) //condicion que pregunta si se habia seleccionado la partida 3
-    {
-        ui->lineEdit2->show(); //mostrar boton
-        ui->lineEdit1->show(); //mostrar boton
-        ui->boton_partida2->show(); //mostrar boton
-        ui->boton_partida1->show(); //mostrar boton
-    }
-
-    ui->lineEdit_usuario->setText("");
-    ui->lineEdit_clave->setText("");
-}
-
-void MainWindow::on_boton_eliminar_clicked()
-{
-    if(partida==1)
-    {
-        QString usuario=NULL; //variable que me guarda el nombre de usuario ingresado
-        QString clave=NULL; //variable que me guarda la clave ingresada
-        usuario.append(ui->lineEdit_usuario->text()); //tomar texto del lineEdit
-        clave.append(ui->lineEdit_clave->text()); //tomar texto del lineEdit
-        QString texto; //variable string
-        texto.append("3"); //agregar las vidas
-        texto.append(","); //agregar coma
-        texto.append("1"); //agregar nivel
-        texto.append(","); //agregar coma
-        texto.append("vacio"); //agregar usuario
-        texto.append(","); //agregar coma
-        texto.append("vacio"); //agregar contraseña
-
-        QFile archivo("partida1.txt"); //leer el archivo
-        if(!archivo.open(QFile::WriteOnly)) //condicion que pregunta si no lo pudo abrir
-        {
-            QMessageBox::warning(this,"UUYYYY :V","ERROR AL ABRIR EL ARCHIVO"); //mensaje que dice que no se pudo leer
-        }
-
-        QTextStream out(&archivo); //flujo de escritura
-        out<<texto; //escribir sobre el archivo
-        archivo.flush(); //cerrar procesos sobre archivo
-        archivo.close(); //cerrar archivo
-        QMessageBox::information(this,"Borrar usuario","usuario borrado exitosamente");
-    }
-
-    if(partida==2)
-    {
-        QString usuario=NULL; //variable que me guarda el nombre de usuario ingresado
-        QString clave=NULL; //variable que me guarda la clave ingresada
-        usuario.append(ui->lineEdit_usuario->text()); //tomar texto del lineEdit
-        clave.append(ui->lineEdit_clave->text()); //tomar texto del lineEdit
-        QString texto; //variable string
-        texto.append("3"); //agregar las vidas
-        texto.append(","); //agregar coma
-        texto.append("1"); //agregar nivel
-        texto.append(","); //agregar coma
-        texto.append("vacio"); //agregar usuario
-        texto.append(","); //agregar coma
-        texto.append("vacio"); //agregar contraseña
-
-        QFile archivo("partida2.txt"); //leer el archivo
-        if(!archivo.open(QFile::WriteOnly)) //condicion que pregunta si no lo pudo abrir
-        {
-            QMessageBox::warning(this,"UUYYYY :V","ERROR AL ABRIR EL ARCHIVO"); //mensaje que dice que no se pudo leer
-        }
-
-        QTextStream out(&archivo); //flujo de escritura
-        out<<texto; //escribir sobre el archivo
-        archivo.flush(); //cerrar procesos sobre archivo
-        archivo.close(); //cerrar archivo
-        QMessageBox::information(this,"Borrar usuario","usuario borrado exitosamente");
-    }
-
-    if(partida==3)
-    {
-        QString usuario=NULL; //variable que me guarda el nombre de usuario ingresado
-        QString clave=NULL; //variable que me guarda la clave ingresada
-        usuario.append(ui->lineEdit_usuario->text()); //tomar texto del lineEdit
-        clave.append(ui->lineEdit_clave->text()); //tomar texto del lineEdit
-        QString texto; //variable string
-        texto.append("3"); //agregar las vidas
-        texto.append(","); //agregar coma
-        texto.append("1"); //agregar nivel
-        texto.append(","); //agregar coma
-        texto.append("vacio"); //agregar usuario
-        texto.append(","); //agregar coma
-        texto.append("vacio"); //agregar contraseña
-
-        QFile archivo("partida3.txt"); //leer el archivo
-        if(!archivo.open(QFile::WriteOnly)) //condicion que pregunta si no lo pudo abrir
-        {
-            QMessageBox::warning(this,"UUYYYY :V","ERROR AL ABRIR EL ARCHIVO"); //mensaje que dice que no se pudo leer
-        }
-
-        QTextStream out(&archivo); //flujo de escritura
-        out<<texto; //escribir sobre el archivo
-        archivo.flush(); //cerrar procesos sobre archivo
-        archivo.close(); //cerrar archivo
-        QMessageBox::information(this,"Borrar usuario","usuario borrado exitosamente");
-    }
-
-    ui->boton_regresar->click();
 
 }
 
@@ -2219,3 +1381,336 @@ void MainWindow::on_boton_informacion_clicked()
     borrar_todos_botones();
     ui->boton_regresar->show();
 }
+
+void MainWindow::on_actionGuardar_partida_triggered()
+{
+    //este boton se encarga de borrar el usuario antiguo y guardarlo con los nuevos datos del usuario
+            string Nnames,clave,nivel_,punaje_,vida_,px1_,py1_;
+
+            ifstream leer;
+            ofstream Temp,Guardar;
+            Guardar.open("Guardar.txt",ios::app);
+            leer.open("Guardar.txt");
+            Temp.open("temp.txt",ios::app);
+            bool encontrado =false;
+            leer>>Nnames;
+            while (!leer.eof()) {
+                leer>>clave;
+                leer>>nivel_;
+                leer>>punaje_;
+                leer>>vida_;
+                leer>>px1_;
+                leer>>py1_;
+                if(Nnames==user.toStdString()&& clave ==contra.toStdString()){
+                    encontrado=true;
+                    Temp<<user.toStdString()<<" "<<contra.toStdString()<<" "<<nivel<<" "<<pn<<" "<<vidas->getVidas()<<" "<<px1<<" "<<py1<<endl;
+                }
+                else{
+                    Temp<<Nnames<<" "<<clave<<" "<<nivel_<<" "<<punaje_<<" "<<vida_<<" "<<px1_<<" "<<py1_<<endl;
+                }
+                leer>>Nnames;
+
+            }
+            if(!encontrado){
+                Temp<<user.toStdString()<<" "<<contra.toStdString()<<" "<<nivel<<" "<<pn<<" "<<vida<<" "<<px1<<" "<<px1<<endl;
+            }
+            leer.close();
+            Temp.close();
+            Guardar.close();
+            remove("Guardar.txt");
+            rename("temp.txt","Guardar.txt");
+
+
+        QMessageBox msgBox;
+        msgBox.setText("Partida Guardada");
+        msgBox.setWindowTitle("¡EXITO!");
+        msgBox.setWindowIcon(QIcon(":/recursos/imagenes/imagen.png"));
+        msgBox.setStyleSheet("background-color:#211b18;"
+                             "color:white;");
+        msgBox.exec();
+
+}
+
+void MainWindow::on_actioneliminar_triggered()
+{
+    //este boton se encarga de eliminar el usuario activo
+    string Nnames,clave,nivel_,punaje_,Vida_,px1_,px2_,py1_,py2_;
+
+    ifstream leer;
+    ofstream Temp,Guardar;
+    Guardar.open("Guardar.txt",ios::app);
+    leer.open("Guardar.txt");
+    Temp.open("temp.txt",ios::app);
+    bool encontrado =false;
+    leer>>Nnames;
+    while (!leer.eof()) {
+        leer>>clave;
+        leer>>nivel_;
+        leer>>punaje_;
+        leer>>Vida_;
+        leer>>px1_;
+        leer>>py1_;
+        leer>>px2_;
+        leer>>py2_;
+        if(Nnames==user.toStdString() && clave==contra.toStdString()){
+            encontrado=true;
+        }
+        else{
+            Temp<<Nnames<<" "<<clave<<" "<<nivel_<<" "<<punaje_<<" "<<Vida_<<" "<<px1_<<" "<<py1_<<endl;
+        }
+        leer>>Nnames;
+
+    }
+    if(!encontrado){
+        Temp<<user.toStdString()<<" "<<contra.toStdString()<<" "<<nivel<<" "<<pn<<" "<<vida<<" "<<px1<<" "<<px1<<endl;
+    }
+    leer.close();
+    Temp.close();
+    Guardar.close();
+    remove("Guardar.txt");
+    rename("temp.txt","Guardar.txt");
+
+
+    QMessageBox msgBox;
+    msgBox.setText("Usuario eliminado");
+    msgBox.setWindowTitle("¡EXITO!");
+    msgBox.setWindowIcon(QIcon(":/recursos/imagenes/imagen.png"));
+    msgBox.setStyleSheet("background-color:#211b18;"
+                         "color:white;");
+    msgBox.exec();
+    this->close();
+
+}
+
+void MainWindow::on_Registrar_clicked()
+{
+    //este boton se encarga de registrar los nuevos usuarios si no se encuentran antiguar previamente registrados
+user=ui->usuario->text();
+contra=ui->clave->text();
+
+    if(user==NULL || contra==NULL){
+        //En el caso de que el usuario no haya ingresado nada simplemente se le indicara que es un ingreso invalido
+        QMessageBox msgBox;
+        msgBox.setText("Registro Invalido.");
+        msgBox.setWindowTitle("War Tank");
+        msgBox.setWindowIcon(QIcon(":/recursos/imagenes/imagen.png"));
+        msgBox.setStyleSheet("background-color:#211b18;"
+                             "color:white;");
+        msgBox.exec();
+        ui->usuario->clear();
+        ui->clave->clear();
+
+
+    }else{
+        ui->boton_cargarpartida->hide();
+        ui->boton_nuevapartida->hide();
+        ui->Registrar->hide();
+        ui->Iniciar->hide();
+        ui->Volver->hide();
+        ui->label_usuario->hide();
+        ui->label_clave->hide();
+        ui->usuario->hide();
+        ui->clave->hide();
+        ui->Salir->hide();
+        string Nnames,clave,nivel_,punaje_,vida_,px1_,py1_;
+
+        ifstream leer;
+        ofstream Temp,Guardar;
+        Guardar.open("Guardar.txt",ios::app);
+        leer.open("Guardar.txt");
+        Temp.open("temp.txt",ios::app);
+        bool encontrado =false;
+        leer>>Nnames;
+        while (!leer.eof()) {
+            leer>>clave;
+            leer>>nivel_;
+            leer>>punaje_;
+            leer>>vida_;
+            leer>>px1_;
+            leer>>py1_;
+            if(Nnames==user.toStdString()&&clave==contra.toStdString()){
+                encontrado=true;
+                QMessageBox msgBox;
+                msgBox.setText("Usuario existente.");
+                msgBox.setWindowTitle("War Tank");
+                msgBox.setWindowIcon(QIcon(":/recursos/imagenes/imagen.png"));
+                msgBox.setStyleSheet("background-color:#211b18;"
+                                     "color:white;");
+                msgBox.exec();
+                ui->usuario->clear();
+                ui->clave->clear();
+                Temp<<Nnames<<" "<<clave<<" "<<nivel_<<" "<<punaje_<<" "<<vida_<<" "<<px1_<<" "<<py1_<<endl;
+            }
+            else{
+                Temp<<Nnames<<" "<<clave<<" "<<nivel_<<" "<<punaje_<<" "<<vida_<<" "<<px1_<<" "<<py1_<<endl;
+            }
+            leer>>Nnames;
+
+        }
+        if(!encontrado){
+            Temp<<user.toStdString()<<" "<<contra.toStdString()<<" "<<1<<" "<<pn<<" "<<vida<<" "<<px1<<" "<<py1<<endl;
+        }
+        leer.close();
+        Temp.close();
+        Guardar.close();
+        remove("Guardar.txt");
+        rename("temp.txt","Guardar.txt");
+        if(!encontrado){
+            //se empieza en el nivel 1
+            musica->stop(); //para cancion menu
+            tanque1->setPosx(10);
+            vidas->setVidas(3); //dar 3 vidas
+            puntos->setPuntaje(0); //dar un puntaje de 0
+            borrar_todos_botones(); // borrar todos los botones
+            ui->pausar->show(); //mostrar boton pausa
+            partida=0;
+            nivel1(); // ir a funcion nivel1
+        }else{
+            //si se encuentra un usuario previamente registrado te envia al menu de inicio
+            ui->boton_cargarpartida->show();
+            ui->boton_nuevapartida->show();
+            ui->boton_multijugador->show();
+            ui->Registrar->hide();
+            ui->Iniciar->hide();
+            ui->Volver->hide();
+            ui->label_clave->hide();
+            ui->label_usuario->hide();
+            ui->usuario->hide();
+            ui->clave->hide();
+            ui->Salir->show();
+        }
+
+    }
+
+}
+
+void MainWindow::on_Iniciar_clicked()
+{
+    /*este boton se encarga de verificar si el usuario ingresado es el correcto y carga a el o los
+    jugadores en el mundo respectivo con el puntaje respectivo*/
+        user=ui->usuario->text();
+        contra=ui->clave->text();
+        if(user==NULL || contra==NULL){
+            //En el caso de que el usuario no haya ingresado nada simplemente se le indicara que es un ingreso invalido
+            QMessageBox msgBox;
+            msgBox.setText("Usuario o Contraseña Invalida.");
+            msgBox.setWindowTitle("War Tank");
+            msgBox.setWindowIcon(QIcon(":/recursos/imagenes/imagen.png"));
+            msgBox.setStyleSheet("background-color:#211b18;"
+                                 "color:white;");
+            msgBox.exec();
+            ui->usuario->clear();
+            ui->clave->clear();
+
+
+        }else{
+            string Nnames,clave,nivel_,punaje_,vida_,px1_,py1_;
+
+            ifstream leer;
+            ofstream Temp,Guardar;
+            Guardar.open("Guardar.txt",ios::app);
+            leer.open("Guardar.txt");
+            Temp.open("temp.txt",ios::app);
+            leer>>Nnames;
+            while (!leer.eof()) {
+                leer>>clave;
+                leer>>nivel_;
+                leer>>punaje_;
+                leer>>vida_;
+                leer>>px1_;
+                leer>>py1_;
+                //le da los valores respectivos a las variables
+                if(Nnames==user.toStdString()&&clave==contra.toStdString()){
+                    //se evalua si se encontro el usuario con su respectiva contraseña
+                    cargado=true;
+                    nivel=stoi(nivel_);
+                    pn=stoi(punaje_);
+                    vida=stoi(vida_);
+                    Temp<<Nnames<<" "<<clave<<" "<<nivel_<<" "<<punaje_<<" "<<vida_<<" "<<px1_<<" "<<py1_<<endl;
+
+                }
+                else{
+                    //si no se encontro se gusrda el usuario que estaba
+                    Temp<<Nnames<<" "<<clave<<" "<<nivel_<<" "<<punaje_<<" "<<vida_<<" "<<px1_<<" "<<py1_<<endl;
+                }
+                leer>>Nnames;
+
+            }
+            leer.close();
+            Temp.close();
+            Guardar.close();
+            remove("Guardar.txt");
+            rename("temp.txt","Guardar.txt");
+        }
+        if (cargado==true){
+            ui->boton_cargarpartida->hide();
+            ui->boton_nuevapartida->hide();
+            ui->boton_multijugador->hide();
+            ui->boton_informacion->hide();
+            ui->Registrar->hide();
+            ui->Iniciar->hide();
+            ui->Volver->hide();
+            ui->label_clave->hide();
+            ui->label_usuario->hide();
+            ui->usuario->hide();
+            ui->clave->hide();
+            ui->Salir->hide();
+            //aca se mira en que nivel estaba y se carga con el numero de jugadores correspondientes
+            if(nivel==1){
+                vidas->setVidas(vida);
+                nivel1();}
+            if(nivel==2){
+                vidas->setVidas(vida);
+                nivel2();}
+            if(nivel==3){
+                vidas->setVidas(vida);
+                nivel3();}
+        }
+        else{
+            //aca se evalua si el usuario no se encontro y te devuelve al menu de inicio
+            QMessageBox msgBox;
+            msgBox.setText("Usuario o Contraseña Invalida.");
+            msgBox.setWindowTitle("War Tank");
+            msgBox.setWindowIcon(QIcon(":/recursos/imagenes/imagen.png"));
+            msgBox.setStyleSheet("background-color:#211b18;"
+                                 "color:white;");
+            msgBox.exec();
+            ui->usuario->clear();
+            ui->clave->clear();
+            ui->boton_cargarpartida->show();
+            ui->boton_nuevapartida->show();
+            ui->boton_multijugador->show();
+            ui->Registrar->hide();
+            ui->Iniciar->hide();
+            ui->Volver->hide();
+            ui->label_usuario->hide();
+            ui->label_clave->hide();
+            ui->usuario->hide();
+            ui->clave->hide();
+        }
+
+
+}
+
+void MainWindow::on_Volver_clicked()
+{
+    //al hundir este boton se devuelve al menu de inicio
+    ui->boton_cargarpartida->show();
+    ui->boton_nuevapartida->show();
+    ui->boton_multijugador->show();
+    ui->Registrar->hide();
+    ui->Iniciar->hide();
+    ui->Volver->hide();
+    ui->label_clave->hide();
+    ui->label_usuario->hide();
+    ui->usuario->hide();
+    ui->clave->hide();
+    ui->Salir->show();
+}
+
+void MainWindow::on_Salir_clicked()
+{
+    //este boton se encarga de salir de la ventana
+    this->close();
+}
+
